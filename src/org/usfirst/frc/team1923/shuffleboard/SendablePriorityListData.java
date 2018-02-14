@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1923.shuffleboard;
 
+import com.google.common.collect.ImmutableMap;
+
 import edu.wpi.first.shuffleboard.api.data.ComplexData;
 import edu.wpi.first.shuffleboard.api.util.Maps;
 
@@ -11,10 +13,7 @@ public final class SendablePriorityListData extends ComplexData<SendablePriority
     private final String[] items;
 
     public SendablePriorityListData(Map<String, Object> map) {
-        this.items = new String[map.size()];
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            this.items[Integer.parseInt(entry.getKey())] = (String) entry.getValue();
-        }
+        this.items = ((String[]) map.getOrDefault("values", new String[0])).clone();
     }
 
     public String[] getItems() {
@@ -28,11 +27,7 @@ public final class SendablePriorityListData extends ComplexData<SendablePriority
 
     @Override
     public Map<String, Object> asMap() {
-        Maps.MapBuilder<String, Object> builder = Maps.builder();
-        for (int i = 0; i < this.items.length; ++i) {
-            builder.put(String.valueOf(i), this.items[i]);
-        }
-        return builder.build();
+        return ImmutableMap.of("values", items.clone());
     }
 
     @Override

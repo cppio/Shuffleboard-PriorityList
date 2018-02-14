@@ -1,12 +1,12 @@
 package org.usfirst.frc.team1923.shuffleboard;
 
-import com.google.common.collect.ImmutableMap; // TODO
+//import com.google.common.collect.ImmutableMap; // TODO
 
 import edu.wpi.first.shuffleboard.api.data.ComplexDataType;
 
 import org.usfirst.frc.team1923.shuffleboard.SendablePriorityListData;
 
-//import java.util.Collections;
+import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -25,8 +25,8 @@ public final class SendablePriorityListType extends ComplexDataType<SendablePrio
 
     @Override
     public SendablePriorityListData getDefaultValue() {
-        return new SendablePriorityListData(ImmutableMap.of("0", "Do Nothing", "1", "Cross The Line", "2", "Scale", "3", "Switch")); // TODO
-        //return new SendablePriorityListData(Collections.emptyMap());
+        //return new SendablePriorityListData(ImmutableMap.of("values", new String[] {"Do Nothing", "Cross The Line", "Scale", "Switch"})); // TODO
+        return new SendablePriorityListData(Collections.emptyMap());
     }
 
 }
