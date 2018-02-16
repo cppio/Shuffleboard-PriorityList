@@ -6,6 +6,7 @@ import edu.wpi.first.shuffleboard.api.data.ComplexData;
 import edu.wpi.first.shuffleboard.api.util.Maps;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public final class SendablePriorityListData extends ComplexData<SendablePriorityListData> {
@@ -14,6 +15,10 @@ public final class SendablePriorityListData extends ComplexData<SendablePriority
 
     public SendablePriorityListData(Map<String, Object> map) {
         this.items = ((String[]) map.getOrDefault("values", new String[0])).clone();
+    }
+
+    public SendablePriorityListData(List<String> values) {
+        this.items = values.toArray(new String[0]);
     }
 
     public String[] getItems() {

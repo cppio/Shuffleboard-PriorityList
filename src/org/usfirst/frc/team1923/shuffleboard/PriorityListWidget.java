@@ -7,10 +7,6 @@ import edu.wpi.first.shuffleboard.api.widget.ParametrizedController;
 import org.usfirst.frc.team1923.shuffleboard.SendablePriorityListData;
 import org.usfirst.frc.team1923.shuffleboard.SendablePriorityListType;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -82,6 +78,10 @@ public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityL
     }
     */
 
+    private void updateOrder() {
+        this.setData(new SendablePriorityListData(this.listView.getItems()));
+    }
+
     @FXML private Pane root;
     @FXML private ListView<String> listView;
 
@@ -106,7 +106,7 @@ public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityL
             this.listView.getItems().setAll(newValue.getItems()); // TODO
         });
         this.listView.setSelectionModel(new NoSelectionModel());
-        this.listView.getItems().setAll(this.dataOrDefault.get().getItems()); // FIXME idk if this is needed
+        this.listView.getItems().setAll(this.getData().getItems()); // FIXME idk if this is needed
         /*
         exportProperties(preset);
         */
@@ -175,7 +175,7 @@ public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityL
                 event.setDropCompleted(dragboard.hasString());
                 if (dragboard.hasString()) {
                     this.getListView().getItems().add(Math.min(this.getIndex(), this.getListView().getItems().size()), dragboard.getString().split(" ", 2)[1]);
-//                    recalculatePreset();
+                    updateOrder();
                     dragboard.setContent(null);
                 }
                 event.consume();
@@ -201,7 +201,7 @@ public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityL
                 if (dragboard.hasString()) {
                     String[] values = dragboard.getString().split(" ", 2);
                     this.getListView().getItems().add(Integer.parseInt(values[0]), values[1]);
-//                    recalculatePreset();
+                    updateOrder();
                 }
                 event.consume();
             });
