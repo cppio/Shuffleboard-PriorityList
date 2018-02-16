@@ -11,7 +11,6 @@ import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -28,6 +27,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 @Description(
@@ -35,17 +35,18 @@ import javafx.scene.paint.Color;
     summary = "A drag-and-drop-enabled Priority List",
     dataTypes = SendablePriorityListType.class
 )
-@ParametrizedController("PriorityListWidget.fxml")
 public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityListData> {
 
     private void updateOrder() {
         this.setData(new SendablePriorityListData(this.listView.getItems()));
     }
 
-    @FXML private Pane root;
-    @FXML private ListView<String> listView;
+    private Pane root = new StackPane();
+    private ListView<String> listView = new ListView<>();
 
-    @FXML private void initialize() {
+    public PriorityListWidget() {
+        this.root.getChildren().add(this.listView);
+
         this.listView.setCellFactory(param -> new DraggableCell());
         this.dataOrDefault.addListener((value, oldValue, newValue) -> {
             this.listView.getItems().setAll(newValue.getItems());
