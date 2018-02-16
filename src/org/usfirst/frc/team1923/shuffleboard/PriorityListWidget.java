@@ -38,46 +38,6 @@ import javafx.scene.paint.Color;
 @ParametrizedController("PriorityListWidget.fxml")
 public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityListData> {
 
-    /*
-    private static enum Preset {
-        ScaleFirst("Scale", "Switch", "Cross The Line"),
-        SwitchFirst("Switch", "Scale", "Cross The Line"),
-        CrossTheLine("Cross The Line"),
-        DoNothing("Do Nothing"),
-        Custom();
-
-        private final String[] order;
-
-        Preset(String... order) {
-            this.order = order;
-        }
-
-        public String[] getOrder() {
-            return this.order.clone();
-        }
-    }
-
-    private static <T> boolean beginsWith(List<T> list, T[] array) {
-        for (int i = 0; i < array.length; ++i) {
-            if (!list.get(i).equals(array[i])) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private final Property<Preset> preset = new SimpleObjectProperty<>(this, "Preset", Preset.CrossTheLine);
-    private void recalculatePreset() {
-        for (Preset i : Preset.values()) {
-            if (beginsWith(this.listView.getItems(), i.getOrder())) {
-                this.preset.setValue(i);
-                return;
-            }
-        }
-        preset.setValue(Preset.Custom);
-    }
-    */
-
     private void updateOrder() {
         this.setData(new SendablePriorityListData(this.listView.getItems()));
     }
@@ -87,29 +47,10 @@ public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityL
 
     @FXML private void initialize() {
         this.listView.setCellFactory(param -> new DraggableCell());
-        /*
-        this.preset.addListener((value, oldValue, newValue) -> {
-            if (newValue == Preset.Custom) {
-                recalculatePreset();
-            } else {
-                String[] order = newValue.getOrder();
-                if (!beginsWith(this.listView.getItems(), order)) {
-                    for (int i = 0; i < order.length; ++i) {
-                        this.listView.getItems().remove(order[i]);
-                        this.listView.getItems().add(i, order[i]);
-                    }
-                }
-            }
-        });
-        */
         this.dataOrDefault.addListener((value, oldValue, newValue) -> {
-            this.listView.getItems().setAll(newValue.getItems()); // TODO
+            this.listView.getItems().setAll(newValue.getItems());
         });
         this.listView.setSelectionModel(new NoSelectionModel());
-        this.listView.getItems().setAll(this.getData().getItems()); // FIXME idk if this is needed
-        /*
-        exportProperties(preset);
-        */
     }
 
     private static class NoSelectionModel extends MultipleSelectionModel<String> {
