@@ -42,6 +42,7 @@ import javafx.scene.paint.Color;
 @ParametrizedController("PriorityListWidget.fxml")
 public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityListData> {
 
+    /*
     private static enum Preset {
         ScaleFirst("Scale", "Switch", "Cross The Line"),
         SwitchFirst("Switch", "Scale", "Cross The Line"),
@@ -79,12 +80,14 @@ public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityL
         }
         preset.setValue(Preset.Custom);
     }
+    */
 
     @FXML private Pane root;
     @FXML private ListView<String> listView;
 
     @FXML private void initialize() {
         this.listView.setCellFactory(param -> new DraggableCell());
+        /*
         this.preset.addListener((value, oldValue, newValue) -> {
             if (newValue == Preset.Custom) {
                 recalculatePreset();
@@ -98,15 +101,16 @@ public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityL
                 }
             }
         });
+        */
         this.dataOrDefault.addListener((value, oldValue, newValue) -> {
             this.listView.getItems().setAll(newValue.getItems()); // TODO
         });
         this.listView.setSelectionModel(new NoSelectionModel());
-        this.listView.getItems().setAll(this.dataOrDefault.get().getItems());
+        this.listView.getItems().setAll(this.dataOrDefault.get().getItems()); // FIXME idk if this is needed
+        /*
         exportProperties(preset);
+        */
     }
-
-    private DraggableCell last;
 
     private static class NoSelectionModel extends MultipleSelectionModel<String> {
         @Override public ObservableList<Integer> getSelectedIndices() {
@@ -140,6 +144,7 @@ public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityL
         return this.root;
     }
 
+    private DraggableCell last;
     private static final Border EMPTY_BORDER = new Border(new BorderStroke(Color.TRANSPARENT, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2, 0, 0, 0)));
     private static final Border INSERT_BORDER = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2, 0, 0, 0)));
     private class DraggableCell extends ListCell<String> {
@@ -170,7 +175,7 @@ public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityL
                 event.setDropCompleted(dragboard.hasString());
                 if (dragboard.hasString()) {
                     this.getListView().getItems().add(Math.min(this.getIndex(), this.getListView().getItems().size()), dragboard.getString().split(" ", 2)[1]);
-                    recalculatePreset();
+//                    recalculatePreset();
                     dragboard.setContent(null);
                 }
                 event.consume();
@@ -196,7 +201,7 @@ public class PriorityListWidget extends ComplexAnnotatedWidget<SendablePriorityL
                 if (dragboard.hasString()) {
                     String[] values = dragboard.getString().split(" ", 2);
                     this.getListView().getItems().add(Integer.parseInt(values[0]), values[1]);
-                    recalculatePreset();
+//                    recalculatePreset();
                 }
                 event.consume();
             });
