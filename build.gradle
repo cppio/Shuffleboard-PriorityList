@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'http://first.wpi.edu/FRC/roborio/maven/release'
+    }
+}
+
+dependencies {
+    compileOnly group: 'edu.wpi.first.shuffleboard', name: 'api', version: '1.+'
+}
